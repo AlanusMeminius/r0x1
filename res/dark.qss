@@ -1,0 +1,102 @@
+/*========sidebar=======*/
+.Ui--SideBar {
+    padding-top: 20px;
+    /*padding-left: 5px;*/
+    background: transparent;
+    min-width: 120px;
+    max-width: 120px;
+    font-size: 14px;
+    font-weight: 400;
+}
+
+.Ui--SideBar::item {
+    height: 30px;
+    border-radius: 5px;
+}
+
+.Ui--SideBar::item:selected {
+    color: #363333;
+    background-color: rgb(197, 197, 197);
+    /*padding-left: 5px;*/
+    /*padding-top: 5px;*/
+    /*padding-bottom: 5px;*/
+    border-radius: 5px;
+}
+
+.QStackedWidget#MainStackedWidget {
+    background-color: #212327;
+    border-radius: 10px;
+    padding: 5px;
+}
+
+/*========Add page=======*/
+.QLabel#AddLabel {
+    color: #cccccc;
+    font-weight: 600;
+    font-size: 20px;
+    max-height: 30px;
+    /*padding-left: 5px;*/
+}
+
+.QLineEdit#UrlInput, .QLineEdit#PathInput, .QLineEdit#RenameInput {
+    border-radius: 8px;
+    border: 1px solid #484646;
+    padding: 5px 15px;
+}
+
+.QLineEdit:focus#UrlInput, .QLineEdit:focus#PathInput, .QLineEdit:focus#RenameInput {
+    border: 1px solid #d0e3ff;
+}
+
+.QLineEdit::placeholder#UrlInput, .QLineEdit::placeholder#PathInput, .QLineEdit::placeholder#RenameInput {
+    color: #767e89;
+}
+
+.QPushButton#ActionBtn {
+    background-color: #0d6efd;
+    color: #484646;
+    font-weight: 600;
+    border-radius: 8px;
+    border: 1px solid #0d6efd;
+    padding: 5px 15px;
+}
+
+.QPushButton:hover#ActionBtn, .QPushButton:focus#ActionBtn {
+    background-color: #0b5ed7;
+    border: 3px solid #9ac3fe;
+}
+
+.Ui--AddPageSetting#AddPageDefaultSetting {
+    background: #212327;
+    border-radius: 5px;
+}
+
+.QLabel#AddPagePathLabel, .QLabel#AddPageRenameLabel {
+    min-width: 120px;
+}
+
+.QPushButton#CancelBtn, .QPushButton#ConfirmBtn {
+    background-color: #0d6efd;
+    color: #484646;
+    font-weight: 600;
+    border-radius: 8px;
+    border: 1px solid #0d6efd;
+    padding: 5px 15px;
+    /*right: 140px;*/
+    max-width: 100px;
+}
+/*========Task page=======*/
+.QLabel#TaskLabel {
+    color: #cccccc;
+    font-weight: 600;
+    font-size: 20px;
+    /*padding-left: 5px;*/
+}
+
+/*========Setting page=======*/
+.QLabel#SettingLabel {
+    color: #cccccc;
+    font-weight: 600;
+    font-size: 20px;
+    /*padding-left: 5px;*/
+}

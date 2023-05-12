@@ -1,0 +1,18 @@
+<!DOCTYPE RCC>
+
+<RCC version="1.0">
+    <qresource prefix="/res">
+        <file>style.qss</file>
+        <file>dark.qss</file>
+        <file>icons/hippo.svg</file>
+        <file>icons/flask.svg</file>
+        <file>icons/gear.svg</file>
+        <file>icons/help.svg</file>
+        <file>icons/about.svg</file>
+        <file>icons/delete.svg</file>
+        <file>icons/folder.svg</file>
+        <file>icons/link.svg</file>
+        <file>icons/pause.svg</file>
+    </qresource>
+
+</RCC>
