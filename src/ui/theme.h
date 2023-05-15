@@ -1,9 +1,3 @@
-/*
-* @author: NonEvent
-* @email: nononevent@outlook.com
-* @date: 2023/4/22 16:49
-* @description: 
-*/
 #pragma once
 #include <QFile>
 #include <QIcon>
@@ -12,6 +6,9 @@
 #include <QString>
 #include <QTextStream>
 #include <utility>
+
+static bool darkMode = false;
+
 namespace Ui {
 static constexpr QColor const dBackground = QColor(38, 38, 38);
 static constexpr QColor const lBackground = QColor(235, 235, 235);
@@ -23,11 +20,26 @@ static constexpr QColor const lBtnName = QColor(0, 0, 0);
 constexpr QColor const backgroundColor = lBackground;
 constexpr QColor const btnColor = lBtn;
 constexpr QColor const fontColor = lBtnName;
+
+void setDark();
+
+QColor baseBackgroundColor();
+QColor baseFontColor();
+
+QColor horizonNavigationBackgroundColor();
+QColor horizonNavigationBtnColor();
+QColor horizonNavigationSelectedBtnFontColor();
 }// namespace Ui
 
 class Theme {
    public:
-    static inline QIcon icon(const QString &name) {
+    enum theme {
+        Light,
+        Dark,
+        Auto
+    };
+    void changeTheme(theme);
+    static QIcon icon(const QString &name) {
         return QIcon(QString(":/res/icons/%1.svg").arg(name));
     };
 
@@ -48,16 +60,7 @@ class Theme {
         return qss;
     };
 
-    static bool isDarkTheme() {
-        const QPalette defaultPalette;
-        return (defaultPalette.color(QPalette::WindowText).lightness() > defaultPalette.color(QPalette::Window).lightness());
-    };
-
-    //    static const QColor b = (isDarkTheme()) ? dBackground : lBackground;
-    //     struct color {
-    //        static QColor background = (isDarkTheme()) ? dBackground : lBackground;
-    //        QColor btn = (isDarkTheme()) ? dBtn : lBtn;
-    //        QColor btnName = (isDarkTheme()) ? dBtnName : lBtnName;
-    //    };
+   private:
+    theme currentTheme;
 };
 //static  QColor background = (isDarkTheme()) ? dBackground : lBackground;

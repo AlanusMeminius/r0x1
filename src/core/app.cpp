@@ -1,9 +1,3 @@
-/*
-* @author: NonEvent
-* @email: nononevent@outlook.com
-* @date: 2023/4/21 22:49
-* @description: 
-*/
 #include "app.h"
 #include "parser/url.h"
 #include <QDebug>
@@ -24,18 +18,6 @@ App::App()
     if (setting->loadAria2Setting()) {
         ui->loadSettingUi(setting->settingList);
     }
-    //    setting->loadAria2Setting();
-    //    aria2::libraryInit();
-    //    aria2::Session *session;
-    //    // Create default configuration. The libaria2 takes care of signal
-    //    // handling.
-    //    aria2::SessionConfig config;
-    //    session = aria2::sessionNew(aria2::KeyVals(), config);
-    //
-    //    auto option = aria2::getGlobalOptions(session);
-    //    for (auto v : option) {
-    //        qDebug() << '"'<< v.first.data() << '"' << ',';
-    //    }
 }
 
 void App::processUrl() {

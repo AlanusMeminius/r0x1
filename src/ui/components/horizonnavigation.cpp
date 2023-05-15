@@ -31,13 +31,13 @@ void HorizonNavigation::paintEvent(QPaintEvent *event) {
     painter.setPen(Qt::NoPen);
     QPainterPath background;
     background.addRoundedRect(QRect(0, 0, columnWidth * int(itemList.length()) + 4, rowHeight), radius, radius);
-    painter.fillPath(background, Ui::backgroundColor);
+    painter.fillPath(background, QBrush(Ui::horizonNavigationBackgroundColor()));
     if (itemList.length() > 1) {
     }
     // 画按钮
     QPainterPath itemPath;
     itemPath.addRoundedRect(QRect(2 + offset, 2, columnWidth, rowHeight - 4), radius, radius);
-    painter.fillPath(itemPath, Ui::btnColor);
+    painter.fillPath(itemPath, Ui::horizonNavigationBtnColor());
 
     for (int count = 0; count < itemList.length(); ++count) {
         // 画按钮分割线
@@ -48,12 +48,22 @@ void HorizonNavigation::paintEvent(QPaintEvent *event) {
             }
         }
         // 画按钮名称
-        painter.setPen(Ui::fontColor);
+        if (offset == columnWidth * (count)) {
+            qDebug() << count << offset << columnWidth * count << columnWidth * (count + 1);
+            painter.setPen(Ui::horizonNavigationSelectedBtnFontColor());
+            painter.drawText(
+                QRect(offset, 0, columnWidth, rowHeight),
+                Qt::AlignVCenter | Qt::AlignHCenter,
+                itemList.at(count));
+            continue;
+        }
+        painter.setPen(QColor(105, 109, 120));
         painter.drawText(
             QRect(count * columnWidth, 0, columnWidth, rowHeight),
             Qt::AlignVCenter | Qt::AlignHCenter,
             itemList.at(count));
     }
+
     painter.restore();
 }
 void HorizonNavigation::mousePressEvent(QMouseEvent *event) {

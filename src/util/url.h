@@ -1,9 +1,3 @@
-/*
-* @author: NonEvent
-* @email: nononevent@outlook.com
-* @date: 2023/4/22 18:07
-* @description: 
-*/
 #pragma once
 #include <QString>
 

@@ -1,25 +1,22 @@
-/*
-* @author: NonEvent
-* @email: nononevent@outlook.com
-* @date: 2023/4/30 16:09
-* @description: 
-*/
 #pragma once
 #include "core/setting.h"
+#include "ui/setting/commonsetting.h"
 #include "ui/components/horizonnavigation.h"
-#include "ui/setting/delegate.h"
+#include "ui/setting/settingdelegate.h"
 #include <QLabel>
 #include <QListView>
 #include <QStandardItemModel>
 #include <QVBoxLayout>
+#include <QHBoxLayout>
+#include <QStackedWidget>
 #include <QWidget>
-
+#include <QPushButton>
 namespace Ui {
 
-class SettingList : public QListView {
+class Aria2SettingList : public QListView {
     Q_OBJECT
    public:
-    explicit SettingList(QWidget *parent = nullptr);
+    explicit Aria2SettingList(QWidget *parent = nullptr);
 
    private:
     SettingItemDelegate *settingItemDelegate;
@@ -27,6 +24,9 @@ class SettingList : public QListView {
 
    public:
     void loadSetting(const QList<Core::AppSetting::SettingItemPtr> &setting);
+
+   public slots:
+    void itemClicked(const QModelIndex &index);
 };
 
 class SettingPage : public QWidget {
@@ -34,10 +34,17 @@ class SettingPage : public QWidget {
    public:
     explicit SettingPage(QWidget *parent = nullptr);
 
+
     QVBoxLayout *settingPageLayout;
     QLabel *titleLabel;
+    QHBoxLayout *navigationLayout;
     HorizonNavigation *horizonNavigation;
-    SettingList *settingList;
+    QPushButton *defaultBtn;
+    QPushButton *saveBtn;
+    QStackedWidget *stackedWidget;
+    QScrollArea *commonSettingScrollArea;
+    CommonSetting *commonSetting;
+    Aria2SettingList *settingList;
 };
 
 }// namespace Ui

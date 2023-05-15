@@ -1,9 +1,3 @@
-/*
-* @author: NonEvent
-* @email: nononevent@outlook.com
-* @date: 2023/5/8 09:16
-* @description: 
-*/
 #pragma once
 #include "../util/qvarianthelper.h"
 #include <QString>

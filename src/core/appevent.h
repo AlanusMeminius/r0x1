@@ -1,9 +1,3 @@
-/*
-* @author: NonEvent
-* @email: nononevent@outlook.com
-* @date: 2023/5/4 22:45
-* @description: 
-*/
 #pragma once
 #include <QObject>
 #include <QMutex>

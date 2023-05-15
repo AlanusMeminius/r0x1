@@ -1,9 +1,3 @@
-/*
-* @author: NonEvent
-* @email: nononevent@outlook.com
-* @date: 2023/5/9 23:49
-* @description: 
-*/
 #pragma once
 #include "SimpleIni.h"
 #include "util/qvarianthelper.h"
@@ -19,8 +13,6 @@ class SettingItem {
    public:
     enum Unit {
         None,
-        Second,
-        Mb,
         Number,
         Bool
     };

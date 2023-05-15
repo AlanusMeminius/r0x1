@@ -1,9 +1,3 @@
-/*
-* @author: NonEvent
-* @email: nononevent@outlook.com
-* @date: 2023/4/30 16:09
-* @description: 
-*/
 #include "settingpage.h"
 #include "core/setting.h"
 
@@ -12,8 +6,14 @@ SettingPage::SettingPage(QWidget *parent)
     : QWidget(parent),
       settingPageLayout(new QVBoxLayout(this)),
       titleLabel(new QLabel(this)),
+      navigationLayout(new QHBoxLayout),
       horizonNavigation(new HorizonNavigation(this)),
-      settingList(new SettingList) {
+      defaultBtn(new QPushButton),
+      saveBtn(new QPushButton),
+      stackedWidget(new QStackedWidget),
+      commonSettingScrollArea(new QScrollArea),
+      commonSetting(new CommonSetting),
+      settingList(new Aria2SettingList) {
     setAttribute(Qt::WA_StyledBackground, true);
     this->setLayout(settingPageLayout);
     this->setObjectName("SettingPage");
@@ -21,34 +21,73 @@ SettingPage::SettingPage(QWidget *parent)
     settingPageLayout->addWidget(titleLabel);
     titleLabel->setText("Setting");
 
+    settingPageLayout->addLayout(navigationLayout);
     horizonNavigation->setObjectName("SettingPageNavigation");
-    settingPageLayout->addWidget(horizonNavigation);
+    navigationLayout->addWidget(horizonNavigation);
     QStringList horizonNavigationBtn;
     horizonNavigationBtn << "Common"
                          << "Aria2";
     horizonNavigation->addItems(horizonNavigationBtn);
-    settingPageLayout->addWidget(settingList);
+    navigationLayout->addWidget(defaultBtn);
+    defaultBtn->setObjectName("DefaultBtn");
+    defaultBtn->setText("Default");
+    navigationLayout->addWidget(saveBtn);
+    saveBtn->setObjectName("SaveBtn");
+    saveBtn->setText("Save");
 
-    //    connect(horizonNavigation, &HorizonNavigation::currentItemChanged, stackedWidget, &QStackedWidget::setCurrentIndex);
+    settingPageLayout->addWidget(stackedWidget);
+    stackedWidget->setObjectName("SettingStackedWidget");
+
+    commonSettingScrollArea->setObjectName("CommonSettingScrollArea");
+    commonSettingScrollArea->setWidget(commonSetting);
+    commonSettingScrollArea->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+    stackedWidget->addWidget(commonSettingScrollArea);
+    stackedWidget->addWidget(settingList);
+
+    connect(horizonNavigation, &HorizonNavigation::currentItemChanged, stackedWidget, &QStackedWidget::setCurrentIndex);
 }
 
-
-SettingList::SettingList(QWidget *parent)
+Aria2SettingList::Aria2SettingList(QWidget *parent)
     : QListView(parent),
       model(new QStandardItemModel),
       settingItemDelegate(new SettingItemDelegate) {
     this->setAttribute(Qt::WA_StyledBackground, true);
-    this->setObjectName("SettingList");
+    this->setObjectName("Aria2SettingList");
     this->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     this->setItemDelegate(settingItemDelegate);
     this->setModel(model);
+    this->setContentsMargins(0, 0, 0, 0);
+    this->setSpacing(2);
+
+    connect(this, &QListView::clicked, this, &Aria2SettingList::itemClicked);
 }
-void SettingList::loadSetting(const QList<Core::AppSetting::SettingItemPtr> &setting) {
+void Aria2SettingList::loadSetting(const QList<Core::AppSetting::SettingItemPtr> &setting) {
     for (const auto &singleSettingItem : setting) {
         auto *pItem = new QStandardItem;
         qDebug() << singleSettingItem->value();
         pItem->setData(*singleSettingItem, Qt::UserRole + 1);
         model->appendRow(pItem);
+    }
+}
+void Aria2SettingList::itemClicked(const QModelIndex &index) {
+    if (!index.isValid())
+        return;
+    const auto &data = index.data(Qt::UserRole + 1);
+    if (data.isNull())
+        return;
+    auto setting = data.value<Core::SettingItem>();
+    if (setting.unit() == Core::SettingItem::Bool) {
+        QRectF itemRect = this->visualRect(index).toRectF();
+        int mouseX = this->mapFromGlobal(QCursor::pos()).x();
+        if (setting.value().contains("true", Qt::CaseInsensitive)) {
+            if (mouseX >= itemRect.x() + 247 && mouseX <= itemRect.x() + 267) {
+                setting.setValue("false");
+                model->setData(index, setting, Qt::UserRole + 1);
+            }
+        } else if (mouseX >= itemRect.x() + 227 && mouseX <= itemRect.x() + 247) {
+            setting.setValue("true");
+            model->setData(index, setting, Qt::UserRole + 1);
+        }
     }
 }
 }// namespace Ui

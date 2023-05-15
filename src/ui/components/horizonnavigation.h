@@ -1,9 +1,4 @@
-/*
-* @author: NonEvent
-* @email: nononevent@outlook.com
-* @date: 2023/5/6 11:26
-* @description: 
-*/
+
 #pragma once
 
 //#include <QListWidget>

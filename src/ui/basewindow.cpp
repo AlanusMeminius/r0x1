@@ -1,5 +1,5 @@
 #include "basewindow.h"
-//#include "theme.h"
+#include "theme.h"
 #include <QDebug>
 
 Ui::BaseWindow::BaseWindow(QWidget *parent)
@@ -43,6 +43,7 @@ Ui::BaseWindow::BaseWindow(QWidget *parent)
     connect(sideBar, &QListWidget::currentRowChanged, stackedWidget, &QStackedWidget::setCurrentIndex);
 
     this->setStyleSheet(Theme::styleContent(QString("style")));
+
 }
 
 QString Ui::BaseWindow::getInputUrl() const {

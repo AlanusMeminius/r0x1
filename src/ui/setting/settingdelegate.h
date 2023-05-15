@@ -1,15 +1,9 @@
-/*
-* @author: NonEvent
-* @email: nononevent@outlook.com
-* @date: 2023/5/12 18:18
-* @description: 
-*/
 #pragma once
 #include "ui/components/horizonnavigation.h"
 #include <QListView>
 #include <QStyledItemDelegate>
 
-namespace Ui{
+namespace Ui {
 class SettingItemDelegate : public QStyledItemDelegate {
     Q_OBJECT
    public:
@@ -38,20 +32,19 @@ class SettingItemDelegate : public QStyledItemDelegate {
         const QStyleOptionViewItem &option,
         const QModelIndex &index) override;
 
-    void drawSwitch(
-        QPainter *painter,
-        const QRectF &rectF,
-        const QModelIndex &index);
-
     QWidget *createEditor(QWidget *parent, const QStyleOptionViewItem &option,
                           const QModelIndex &index) const override;
 
+    void paintSwitch(QPainter *painter, const QRectF &rectF, const QString &value) const;
+    void paintNumber(QPainter *painter, const QRectF &rectF, const QString &value) const;
+
    private:
-    int borderRadius = 3;
+    int borderRadius = 2;
+    int spacing = 2;
     int itemHeight = 30;
-    int keyWidth = 300;
+    int nameWidth = 200;
+    int control = 60;
+    int diameter = 18;
 };
 
-
-}
-
+}// namespace Ui

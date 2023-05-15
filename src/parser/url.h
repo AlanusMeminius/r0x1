@@ -1,9 +1,4 @@
-/*
-* @author: NonEvent
-* @email: nononevent@outlook.com
-* @date: 2023/4/25 22:50
-* @description: 
-*/
+
 #pragma once
 #include "bili.h"
 #include <string>

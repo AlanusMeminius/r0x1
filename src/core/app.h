@@ -1,9 +1,3 @@
-/*
-* @author: NonEvent
-* @email: nononevent@outlook.com
-* @date: 2023/4/21 22:49
-* @description: 
-*/
 #pragma once
 #include "setting.h"
 #include "ui/basewindow.h"

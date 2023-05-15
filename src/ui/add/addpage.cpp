@@ -1,9 +1,4 @@
-/*
-* @author: NonEvent
-* @email: nononevent@outlook.com
-* @date: 2023/4/21 23:23
-* @description: 
-*/
+
 #include "addpage.h"
 namespace Ui {
 AddPage::AddPage(QWidget *parent)

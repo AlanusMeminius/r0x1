@@ -1,9 +1,4 @@
-/*
-* @author: NonEvent
-* @email: nononevent@outlook.com
-* @date: 2023/5/4 14:09
-* @description: 
-*/
+
 #include "ariainterface.h"
 #include <QDebug>
 //#include <QtSql/QSqlError>

@@ -17,11 +17,12 @@ class BaseWindow final : public Platform::FramelessWindow {
    public:
     explicit BaseWindow(QWidget *parent = nullptr);
     //  ~MainWindow() override;
-   public:
+   private:
     QHBoxLayout *mainLayout;
     QStackedWidget *stackedWidget;
     //    Toast *toast;
 
+   private:
     Ui::SideBar *sideBar;
     Ui::AddPage *addPage;
     Ui::TaskPage *taskPage;

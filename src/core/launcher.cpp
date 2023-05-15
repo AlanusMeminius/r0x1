@@ -1,5 +1,5 @@
 #include "launcher.h"
-#include "../platform/platform.h"
+#include "platform/platform.h"
 #include "QApplication"
 #include "app.h"
 

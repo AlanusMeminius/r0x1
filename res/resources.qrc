@@ -13,6 +13,11 @@
         <file>icons/folder.svg</file>
         <file>icons/link.svg</file>
         <file>icons/pause.svg</file>
+        <file>icons/url.svg</file>
+        <file>icons/details.svg</file>
+        <file>icons/light.svg</file>
+        <file>icons/dark.svg</file>
+        <file>icons/auto.svg</file>
     </qresource>
 
 </RCC>

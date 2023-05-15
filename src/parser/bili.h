@@ -1,9 +1,4 @@
-/*
-* @author: NonEvent
-* @email: nononevent@outlook.com
-* @date: 2023/4/25 21:45
-* @description: 
-*/
+
 #pragma once
 #include "parser.h"
 namespace URLParser {

@@ -1,9 +1,3 @@
-/*
-* @author: NonEvent
-* @email: nononevent@outlook.com
-* @date: 2023/5/9 21:22
-* @description: 
-*/
 #pragma once
 #include "ui/components/horizonnavigation.h"
 #include <QLabel>

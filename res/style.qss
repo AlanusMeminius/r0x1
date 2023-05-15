@@ -1,15 +1,15 @@
 /*========common=======*/
 .QScrollBar:vertical {
-    border: none;
+/*    border: none;*/
     background: none;
-    width: 8px;
-    border-radius: 4px;
+    width: 6px;
+    border-radius: 3px;
     margin: 5px 0 5px 0;
 }
 
 .QScrollBar::handle:vertical {
     background: lightgray;
-    border-radius: 4px;
+    border-radius: 3px;
 }
 
 .QLabel#AddLabel, .QLabel#TaskLabel, .QLabel#SettingLabel, .QLabel#HelpLabel, .QLabel#AboutLabel {
@@ -44,7 +44,7 @@
 
 
 .QStackedWidget#MainStackedWidget {
-    background-color: #ffffff;
+    background-color: #EBEBF0;
     border-radius: 10px;
     padding: 5px;
 }
@@ -102,20 +102,70 @@
 
 .Ui--TaskList#TaskList {
     border: none;
+    background-color:#EBEBF0;
 }
 
 /*========Setting page=======*/
-
-.Ui--SettingList#SettingList {
-    border: none;
-    /*background: rgba(235,235,235,100%);*/
-    /*border-radius: 5px;*/
+.QPushButton#DefaultBtn,.QPushButton#SaveBtn {
+    max-width: 60px;
+    height: 24px;
+    border-radius: 5px;
+    background-color: rgb(215, 215, 215);
+    margin-right:10px;
 }
+
+.Ui--Aria2SettingList#Aria2SettingList {
+    border: none;
+background-color:#EBEBF0;
+/*    background: qlineargradient(x1:0,y1:0,x2:1,y2: 1,stop:0 #efe7dd,stop:1 #FAF6F3);*/
+/*    border-radius: 5px;*/
+}
+.QStackedWidget#SettingStackedWidget{
+/*border:none;*/
+border-radius: 5px;
+background-color:#EBEBF0;
+/*background-color:#E8E7ED;*/
+}
+
+.QScrollArea#CommonSettingScrollArea{
+border:none;
+/*border-radius: 5px;*/
+background-color:transparent;
+/*background-color:rgb(229, 230, 235);*/
+/*background-color:#E8E7ED;*/
+/*border-radius: 5px;*/
+}
+.Ui--CommonSetting#CommonSetting {
+min-width: 300px;
+border:none;
+/*border-radius: 5px;*/
+background-color:transparent;
+/*border-radius: 5px;*/
+/*background-color:#E8E7ED;*/
+}
+.QPushButton#AutoBrn{
+border:none;
+background-color:#E8E7ED;
+}
+.QPushButton#DarkBrn{
+border:none;
+background-color:#E8E7ED;
+}
+
+.QPushButton#LightBrn {
+min-width: 100px;
+border:none;
+/*background-color:rgb(229, 230, 235);*/
+background-color:#E8E7ED;
+}
+
 #SettingEditor {
     background-color: rgb(215, 215, 215);
     border-radius: 3px;
-    padding: 5px 10px;
+    padding: 0 10px;
+    font-size: 14px;
 }
+
 
 
 /*========Help page=======*/
@@ -130,5 +180,5 @@
 /*}*/
 .QLabel#About {
     /*font-size: 14px;*/
-    margin-bottom: 140px;;
+    margin-bottom: 140px;
 }
