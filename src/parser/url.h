@@ -1,6 +1,8 @@
 
 #pragma once
 #include "bili.h"
+
+#include <memory>
 #include <string>
 
 namespace URLParser {

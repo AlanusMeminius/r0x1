@@ -1,10 +1,19 @@
-cmake_minimum_required(VERSION 3.24)
+cmake_minimum_required(VERSION 3.24.0)
+
+set(CMAKE_TOOLCHAIN_FILE "${CMAKE_CURRENT_SOURCE_DIR}/ThirdParty/vcpkg/scripts/buildsystems/vcpkg.cmake"
+      CACHE STRING "")
+set(VCPKG_APPLOCAL_DEPS ON)
+
 project(R0x1 LANGUAGES CXX)
+
 
 #set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTORCC ON)
 set(CMAKE_AUTOUIC ON)
+
+project(R0x1 LANGUAGES CXX)
+
 # json
 find_package(nlohmann_json CONFIG REQUIRED)
 set(nlohmann-json_IMPLICIT_CONVERSIONS OFF)
@@ -24,9 +33,8 @@ set(QT_COMPONENTS
         Widgets
         )
 
-find_package(Qt6 REQUIRED COMPONENTS ${QT_COMPONENTS})
-
-qt_standard_project_setup()
+find_package(QT NAMES Qt6 Qt5 REQUIRED COMPONENTS Widgets)
+find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS ${QT_COMPONENTS})
 
 SET(EXECUTABLE_OUTPUT_PATH ${PROJECT_BINARY_DIR}/bin)
 
@@ -67,7 +75,7 @@ set(SRC src/core/launcher.cpp
         src/libaria2/ariainterface.h
         src/core/setting.cpp
         src/core/setting.h
-        src/util/qvarianthelper.h src/ui/setting/model.cpp src/ui/setting/model.h)
+        src/util/qvarianthelper.h)
 set(UI
 
         src/ui/basewindow.cpp
@@ -78,8 +86,6 @@ set(UI
         src/ui/add/addpage.h
         src/ui/theme.cpp
         src/ui/theme.h
-        tests/toast.cpp
-        tests/toast.h
         src/ui/task/taskpage.cpp
         src/ui/task/taskpage.h
         src/ui/about/aboutpage.cpp
@@ -90,7 +96,7 @@ set(UI
         src/ui/components/horizonnavigation.h
         src/ui/components/toast.cpp
         src/ui/components/toast.h
-        src/ui/help/helppage.cpp src/ui/help/helppage.h src/ui/setting/delegate.cpp src/ui/setting/delegate.h)
+        src/ui/help/helppage.cpp src/ui/help/helppage.h)
 
 set(Parser
         src/parser/parser.h

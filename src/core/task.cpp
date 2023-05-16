@@ -10,7 +10,8 @@ Task::Task(QString name, QString url, QString dir, QString gid, int status, int 
       m_gid(std::move(gid)),
       m_status(status),
       m_progress(progress),
-      m_speed(speed) {
-}
+      m_speed(speed) 
+      {
+      }
 
 }// namespace Core

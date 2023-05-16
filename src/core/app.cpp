@@ -5,7 +5,6 @@
 #include <QSettings>
 #include <QStandardPaths>
 #include <aria2.h>
-#include <sys/time.h>
 
 App::App()
     : ui(std::make_unique<Ui::BaseWindow>()),
