@@ -1,10 +1,8 @@
 
 #pragma once
 #include "bili.h"
-
-#include <memory>
-#include <string>
-
+#include <QString>
+#include <QRegularExpression>
 namespace URLParser {
 
 class URL {
@@ -15,13 +13,13 @@ class URL {
         YOUTUBE
     };
     std::shared_ptr<Parser> parser = nullptr;
-    std::string &url;
+    QString url;
 
-    bool checkUrl();
+    bool isURI();
     static TYPE checkType();
 
    public:
-    explicit URL(const std::string &url);
+    explicit URL(QString url);
 
     Result get();
 

@@ -1,9 +1,5 @@
-
 #pragma once
 
-//#include <QListWidget>
-//#include <QPropertyAnimation>
-//#include <QStyledItemDelegate>
 #include "ui/theme.h"
 #include <QPaintEvent>
 #include <QPainter>
@@ -15,7 +11,6 @@ class HorizonNavigation : public QWidget {
     Q_OBJECT
    public:
     explicit HorizonNavigation(QWidget *parent = nullptr, QStringList items = {});
-//    explicit HorizonNavigation(QWidget *parent = nullptr);
     void addItems(const QStringList &items);
 
    protected:
@@ -41,28 +36,4 @@ class HorizonNavigation : public QWidget {
     void currentItemChanged(const int &index);
 #pragma clang diagnostic pop
 };
-#if 0
-class ListItemSelectionDelegate : public QStyledItemDelegate {
-    Q_OBJECT
-   public:
-    explicit ListItemSelectionDelegate(QObject *parent = nullptr);
-
-    void paint(QPainter *painter, const QStyleOptionViewItem &option, const QModelIndex &index) const override;
-};
-
-class HorizonNavigation : public QListWidget {
-    Q_OBJECT
-   public:
-    explicit HorizonNavigation(QWidget *parent = nullptr);
-    void addItems(const QStringList &labels);
-   private:
-    QFrame *selectedFrame;
-    QPropertyAnimation *animation;
-    ListItemSelectionDelegate *itemDelegate;
-    void setTextAlignCenter();
-   private slots:
-    void resizeEvent(QResizeEvent *event) override;
-    void updateSelection(QListWidgetItem *current);
-};
-#endif
 }// namespace Ui

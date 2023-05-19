@@ -4,10 +4,10 @@
 #include <QStyledItemDelegate>
 
 namespace Ui {
-class SettingItemDelegate : public QStyledItemDelegate {
+class Aria2SettingItemDelegate : public QStyledItemDelegate {
     Q_OBJECT
    public:
-    explicit SettingItemDelegate(QListView *parent = nullptr);
+    explicit Aria2SettingItemDelegate(QListView *parent = nullptr);
     void paint(
         QPainter *painter,
         const QStyleOptionViewItem &option,

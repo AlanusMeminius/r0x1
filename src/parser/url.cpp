@@ -1,21 +1,24 @@
 
 #include "url.h"
 #include <regex>
+#include <utility>
 
 namespace URLParser {
 
-URL::URL(const std::string &url) : url(const_cast<std::string &>(url)) {
+URL::URL(QString url) : url(std::move(url)) {
 }
-bool URL::checkUrl() {
-    std::regex regex("([hH][tT]{2}[pP]://|[hH][tT]{2}[pP][sS]://|[wW]{3}.|[wW][aA][pP].|[fF][tT][pP].|[fF][iI][lL][eE].)[-A-Za-z0-9+&@#/%?=~_|!:,.;]+[-A-Za-z0-9+&@#/%=~_|]");
-    return std::regex_match(url, regex);
+bool URL::isURI() {
+    QRegularExpression re(
+        "([hH][tT]{2}[pP]://|[hH][tT]{2}[pP][sS]://|[wW]{3}.|[wW][aA][pP].|[fF][tT][pP].|[fF][iI][lL][eE].)"
+        "[-A-Za-z0-9+&@#/%?=~_|!:,.;]+[-A-Za-z0-9+&@#/%=~_|]");
+    return re.match(url).hasMatch();
 }
 URL::TYPE URL::checkType() {
 
-    return URL::BILIBILI;
+    return URL::DEFAULT;
 }
 Result URL::get() {
-    if (!checkUrl()) {
+    if (!isURI()) {
         return {};
     }
     switch (checkType()) {

@@ -1,16 +1,16 @@
 
 #pragma once
-#include <string>
+#include <QString>
 namespace URLParser {
 
 struct Result {
-    std::string urls;
+    QString urls;
     int type;
 };
 
 class Parser {
    public:
-    virtual Result getResult(std::string& url) const = 0;
+    virtual Result getResult(QString url) const = 0;
 };
 
 }// namespace URLParser

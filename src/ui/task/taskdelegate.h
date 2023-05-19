@@ -1,5 +1,7 @@
 #pragma once
 #include <QListView>
+#include <QMouseEvent>
+#include <QPainter>
 #include <QStyledItemDelegate>
 namespace Ui {
 
@@ -24,6 +26,7 @@ class TaskDelegate : public QStyledItemDelegate {
    private:
     int btnWidth = 30;
     int iconSize = 18;
+    static QString formatDownloadSpeed(int bytesPerSec);
 
    signals:
     void buttonClicked(const QModelIndex &index, int type);

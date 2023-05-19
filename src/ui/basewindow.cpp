@@ -1,6 +1,4 @@
 #include "basewindow.h"
-#include "theme.h"
-#include <QDebug>
 
 Ui::BaseWindow::BaseWindow(QWidget *parent)
     : FramelessWindow(parent),
@@ -18,16 +16,10 @@ Ui::BaseWindow::BaseWindow(QWidget *parent)
     this->resize(890, 550);
 
     FramelessWindow::centralWidget->setLayout(mainLayout);
-
-    // sideBar
     mainLayout->addWidget(sideBar);
-
-    // stackedWidget
     stackedWidget->setObjectName("MainStackedWidget");
-    //    stackedWidget->setParent(this);
     mainLayout->addWidget(stackedWidget);
     mainLayout->setContentsMargins(3, 8, 8, 8);
-
     stackedWidget->setMinimumWidth(300);
     stackedWidget->insertWidget(0, addPage);
     stackedWidget->insertWidget(1, taskPage);
@@ -36,14 +28,12 @@ Ui::BaseWindow::BaseWindow(QWidget *parent)
     stackedWidget->insertWidget(4, aboutPage);
     stackedWidget->setCurrentIndex(0);
 
-    auto t = new Toast("this is a toast");
+//    auto t = new Toast("this is a toast");
+//    connect(addPage->actionButton, &QPushButton::clicked, t, &Toast::show);
 
-    connect(addPage->actionButton, &QPushButton::clicked, t, &Toast::show);
+
 
     connect(sideBar, &QListWidget::currentRowChanged, stackedWidget, &QStackedWidget::setCurrentIndex);
-
-    this->setStyleSheet(Theme::styleContent(QString("style")));
-
 }
 
 QString Ui::BaseWindow::getInputUrl() const {

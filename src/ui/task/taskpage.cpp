@@ -17,6 +17,8 @@ TaskList::TaskList(QWidget *parent)
     taskSortFilterProxyModel->setSourceModel(taskModel);
     this->setModel(taskSortFilterProxyModel);
     connect(taskDelegate, &TaskDelegate::buttonClicked, this, &TaskList::btnAction);
+    connect(AppEvent::getInstance(), &AppEvent::addTaskItemToUi, this, &TaskList::addTask);
+    connect(AppEvent::getInstance(), &AppEvent::updateTaskInfoToUi, this, &TaskList::updateTaskStatus);
 }
 void TaskList::btnAction(const QModelIndex &index, int type) const {
     if (type == 1) {
@@ -24,11 +26,38 @@ void TaskList::btnAction(const QModelIndex &index, int type) const {
     }
     // 发送信号
 }
-void TaskList::addTask(Core::Task &task) const {
+void TaskList::addTask(const QVariant &task) {
     // TODO 判断是否重复添加
     taskModel->insertRow(0);
     //    auto index = taskModel->index(0);
     taskModel->setData(taskModel->index(0), task, Qt::DisplayRole);
+}
+void TaskList::updateTaskStatus(const QVariant &v) {
+    auto taskList = taskModel->getTaskList();
+    auto status = v.value<Core::Status>();
+    for (int i = 0; i < taskList.count(); ++i) {
+        if (taskList.at(i).gid() == status.gid) {
+            QModelIndex modelIndex = taskModel->index(i);
+            auto var = modelIndex.data(Qt::DisplayRole);
+            auto task = var.value<Core::Task>();
+            task.status = status;
+            taskModel->setData(modelIndex, task, Qt::DisplayRole);
+        }
+    }
+}
+QString TaskList::formatDownloadSpeed(int bytesPerSec) {
+    const double GIBIBYTES = pow(2, 30);
+    const double MEBIBYTES = pow(2, 20);
+    const double KIBIBYTES = pow(2, 10);
+    if (bytesPerSec >= GIBIBYTES) {
+        return QString::number(bytesPerSec / GIBIBYTES) + "GiB/s";
+    } else if (bytesPerSec >= MEBIBYTES) {
+        return QString::number(bytesPerSec / MEBIBYTES) + "Mib/s";
+    } else if (bytesPerSec >= KIBIBYTES) {
+        return QString::number(bytesPerSec / KIBIBYTES) + "Kib/s";
+    } else {
+        return QString::number(bytesPerSec) + "B/s";
+    }
 }
 
 TaskPage::TaskPage(QWidget *parent)
@@ -61,7 +90,7 @@ TaskPage::TaskPage(QWidget *parent)
     connect(horizonNavigation, &HorizonNavigation::currentItemChanged, [&] {
         taskList->scrollToTop();
     });
-#if 1// 数据测试
+#if 0// 数据测试
     QStringList names;
     names << "archlinux-2023.05.01-x86_64.iso"
           << "qt-everywhere-src-6.5.0.tar.xz"
@@ -79,7 +108,8 @@ TaskPage::TaskPage(QWidget *parent)
         int status = QRandomGenerator::global()->bounded(4);
         //        qDebug() << status;
         //        int p = progress + 8 * i;
-        auto task1 = Core::Task(name, url, dir, gid, status, progress, speed);
+        auto task1 = Core::Task();
+
         taskList->addTask(task1);
     }
 #endif

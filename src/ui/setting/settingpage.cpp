@@ -11,8 +11,8 @@ SettingPage::SettingPage(QWidget *parent)
       defaultBtn(new QPushButton),
       saveBtn(new QPushButton),
       stackedWidget(new QStackedWidget),
-      commonSettingScrollArea(new QScrollArea),
       commonSetting(new CommonSetting),
+      advancedSetting(new AdvancedSetting),
       settingList(new Aria2SettingList) {
     setAttribute(Qt::WA_StyledBackground, true);
     this->setLayout(settingPageLayout);
@@ -26,6 +26,7 @@ SettingPage::SettingPage(QWidget *parent)
     navigationLayout->addWidget(horizonNavigation);
     QStringList horizonNavigationBtn;
     horizonNavigationBtn << "Common"
+                         << "Advanced"
                          << "Aria2";
     horizonNavigation->addItems(horizonNavigationBtn);
     navigationLayout->addWidget(defaultBtn);
@@ -38,10 +39,8 @@ SettingPage::SettingPage(QWidget *parent)
     settingPageLayout->addWidget(stackedWidget);
     stackedWidget->setObjectName("SettingStackedWidget");
 
-    commonSettingScrollArea->setObjectName("CommonSettingScrollArea");
-    commonSettingScrollArea->setWidget(commonSetting);
-    commonSettingScrollArea->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
-    stackedWidget->addWidget(commonSettingScrollArea);
+    stackedWidget->addWidget(commonSetting);
+    stackedWidget->addWidget(advancedSetting);
     stackedWidget->addWidget(settingList);
 
     connect(horizonNavigation, &HorizonNavigation::currentItemChanged, stackedWidget, &QStackedWidget::setCurrentIndex);
@@ -50,7 +49,7 @@ SettingPage::SettingPage(QWidget *parent)
 Aria2SettingList::Aria2SettingList(QWidget *parent)
     : QListView(parent),
       model(new QStandardItemModel),
-      settingItemDelegate(new SettingItemDelegate) {
+      settingItemDelegate(new Aria2SettingItemDelegate) {
     this->setAttribute(Qt::WA_StyledBackground, true);
     this->setObjectName("Aria2SettingList");
     this->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);

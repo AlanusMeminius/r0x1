@@ -6,10 +6,10 @@ namespace URLParser {
 class BiliURLParser : public Parser {
 
    public:
-    Result getResult(std::string& url) const override;
+    Result getResult(QString url) const override;
 
    private:
-    std::string getVideoId(std::string &url);
+    std::string getVideoId(QString url);
 };
 
 }// namespace URLParser

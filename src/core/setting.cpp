@@ -29,7 +29,6 @@ namespace Core {
 }// namespace Core
 const QList<Core::AppSetting::SettingItemPtr> Core::AppSetting::DefaultSettings{
     add("dir", "/download"),
-    //    std::make_shared<Core::SettingItem>("dir", "true"),
     add("disk-cache", "32M", Core::SettingItem::Number),
     add("continue", "true", Core::SettingItem::Bool),
     add("rpc-listen-port", "6800"),
@@ -49,3 +48,6 @@ const QList<Core::AppSetting::SettingItemPtr> Core::AppSetting::DefaultSettings{
     add("connect-timeout", "10", Core::SettingItem::Number),
     add("max-concurrent-downloads", "5", Core::SettingItem::None),
 };
+bool Core::AppSetting::loadCommonSetting() {
+    return false;
+}

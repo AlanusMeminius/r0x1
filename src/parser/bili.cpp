@@ -4,10 +4,10 @@
 
 namespace URLParser {
 
-Result BiliURLParser::getResult(std::string &url) const {
+Result BiliURLParser::getResult(QString url) const {
     return Result();
 }
-std::string BiliURLParser::getVideoId(std::string &url) {
+std::string BiliURLParser::getVideoId(QString url) {
     return std::string();
 }
 }// namespace URLParser

@@ -1,15 +1,16 @@
 #pragma once
 #include "SimpleIni.h"
 #include "util/qvarianthelper.h"
+#include <QDir>
 #include <QMap>
 #include <QSettings>
 #include <QString>
 #include <utility>
-namespace Core {
 
+namespace Core {
 class SettingItem {
     QVARIANTMACRO
-   public:
+
    public:
     enum Unit {
         None,
@@ -30,8 +31,8 @@ class SettingItem {
     void setValue(QString value) { m_value = std::move(value); };
     void setUnit(Unit unit) { m_unit = unit; };
 
-//    SettingItem(const SettingItem &rhs) { operator=(rhs); }
-//    SettingItem &operator=(const SettingItem &rhs) = default;
+    //    SettingItem(const SettingItem &rhs) { operator=(rhs); }
+    //    SettingItem &operator=(const SettingItem &rhs) = default;
 
    private:
     QString m_key;
@@ -45,6 +46,7 @@ class AppSetting {
     explicit AppSetting() = default;
 
    public:
+    bool loadCommonSetting();
     bool loadAria2Setting();
     QList<SettingItemPtr> settingList;
     static QList<SettingItemPtr> getDefaultSettings() { return DefaultSettings; };

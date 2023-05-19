@@ -1,5 +1,6 @@
 ﻿
 #pragma once
+#include "core/appevent.h"
 #include <QEvent>
 #include <QGridLayout>
 #include <QGridLayout>
@@ -31,6 +32,7 @@ class FramelessWindow : public QWidget {
 
    private:
     void hideSystemTitleBar();
+    void setDarkMode(bool);
     QPoint windowPos{};
     QPoint mousePos{};
     bool mousePressed{};

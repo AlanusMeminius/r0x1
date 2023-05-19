@@ -44,11 +44,11 @@ bool TaskModel::insertRows(int position, int rows, const QModelIndex &index) {
 }
 bool TaskModel::removeRows(int position, int rows, const QModelIndex &index) {
     Q_UNUSED(index)
-    beginInsertRows(QModelIndex(), position, position + rows - 1);
+    beginRemoveRows(QModelIndex(), position, position + rows - 1);
     for (int row = 0; row < rows; ++row) {
         tasks.removeAt(position);
     }
-    endInsertRows();
+    endRemoveRows();
     return true;
 }
 [[maybe_unused]] const QList<Core::Task> &TaskModel::getTaskList() const {
@@ -63,7 +63,9 @@ void TaskSortFilterProxyModel::setFilterStatus(const int &index) {
 }
 bool TaskSortFilterProxyModel::filterAcceptsRow(int sourceRow, const QModelIndex &sourceParent) const {
     QModelIndex index = sourceModel()->index(sourceRow, 0, sourceParent);
-    return sourceModel()->data(index).value<Core::Task>().status() == statusFilter;
+    auto data = sourceModel()->data(index);
+    int taskStatus = data.value<Core::Task>().category();
+    return taskStatus == statusFilter;
 }
 bool TaskSortFilterProxyModel::lessThan(const QModelIndex &left, const QModelIndex &right) const {
     //  可以使用其他参数来排序

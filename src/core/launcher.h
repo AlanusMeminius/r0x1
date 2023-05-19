@@ -7,9 +7,10 @@ class Launcher {
    public:
     Launcher(int argc, char *argv[]);
     static std::unique_ptr<Launcher> Create(int argc, char *argv[]);
-    int exec();
-    static void initHighDpi();
     virtual ~Launcher() = default;
+    static void initHighDpi();
+    int exec();
+   private:
    private:
     int _argc;
     char **_argv;

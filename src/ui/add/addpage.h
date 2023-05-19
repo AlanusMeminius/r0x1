@@ -1,5 +1,6 @@
 
 #pragma once
+#include "core/appevent.h"
 #include "ui/components/horizonnavigation.h"
 #include <QGridLayout>
 #include <QHBoxLayout>
@@ -22,7 +23,6 @@ class AddPageDefaultSetting : public QWidget {
     QLineEdit *path;
     QLabel *renameLabel;
     QLineEdit *renamePath;
-
     QPushButton *cancel;
     QPushButton *confirm;
 

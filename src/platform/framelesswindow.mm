@@ -3,6 +3,8 @@
 #include <AppKit/AppKit.h>
 #import <QOperatingSystemVersion>
 
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wincompatible-pointer-types"
 class BlurEffect : public QObject {
     Q_OBJECT
    public:
@@ -20,6 +22,7 @@ class BlurEffect : public QObject {
         blurView.material = NSVisualEffectMaterialPopover;
         blurView.blendingMode = NSVisualEffectBlendingModeBehindWindow;
         blurView.state = NSVisualEffectStateFollowsWindowActiveState;
+        blurView.state = NSVisualEffectState::NSVisualEffectStateActive;
         BlurView = blurView;
 
         const auto widgetView = (NSView *) central->winId();
@@ -28,7 +31,7 @@ class BlurEffect : public QObject {
     };
 
    public:
-    NSView *BlurView = nil;
+    NSVisualEffectView *BlurView = nil;
     NSView *WidgetView = nil;
 };
 // TODO 三个按钮行为重写：1.最小化隐藏到托盘 2.最大化窗口没有缩放 3.按照设定退出行为
@@ -45,6 +48,11 @@ FramelessWindow::FramelessWindow(QWidget *parent)
     this->setAttribute(Qt::WA_StyledBackground, true);
 
     blurEffect->setBlurEffect(this, centralWidget);
+    connect(AppEvent::getInstance(), &AppEvent::themeIndexChange, [this](int which) {
+        if (which < 2) {
+            setDarkMode(which);
+        }
+    });
 }
 void FramelessWindow::paintEvent(QPaintEvent *event) {
     blurEffect->BlurView.frame = blurEffect->WidgetView.frame;
@@ -103,19 +111,24 @@ void FramelessWindow::changeEvent(QEvent *event) {
     }
     QWidget::changeEvent(event);
 }
+void FramelessWindow::setDarkMode(bool dark) {
+    if (dark) {
+        blurEffect->BlurView.material = NSVisualEffectMaterialDark;
+    } else {
+        blurEffect->BlurView.material = NSVisualEffectMaterialPopover;
+    }
+}
 
 class MacOSThemeObserver {
    public:
     explicit MacOSThemeObserver() {
         if (QOperatingSystemVersion::current() > QOperatingSystemVersion::MacOSSierra) {
-
         }
     };
 
    private:
-//    std::unique_ptr<MacOSKeyValueObserver> m_appearanceObserver = nil;
+    //    std::unique_ptr<MacOSKeyValueObserver> m_appearanceObserver = nil;
 };
-
 
 //MacOsThemeObserver::MacOsThemeObserver() {
 //    if (QOperatingSystemVersion::current() > QOperatingSystemVersion::MacOSSierra) {
@@ -123,3 +136,5 @@ class MacOSThemeObserver {
 //    }
 //}
 #include "framelesswindow.moc"
+
+#pragma clang diagnostic pop

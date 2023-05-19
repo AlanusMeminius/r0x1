@@ -1,13 +1,14 @@
+#include "aria2settingdelegate.h"
 #include "core/setting.h"
-#include "settingdelegate.h"
+#include "ui/theme.h"
 #include <QLineEdit>
 #include <QPainter>
 #include <QPainterPath>
 namespace Ui {
 
-SettingItemDelegate::SettingItemDelegate(QListView *parent) : QStyledItemDelegate(parent) {
+Aria2SettingItemDelegate::Aria2SettingItemDelegate(QListView *parent) : QStyledItemDelegate(parent) {
 }
-void SettingItemDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option, const QModelIndex &index) const {
+void Aria2SettingItemDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option, const QModelIndex &index) const {
     if (!index.isValid())
         return;
     const auto &data = index.data(Qt::UserRole + 1);
@@ -19,17 +20,17 @@ void SettingItemDelegate::paint(QPainter *painter, const QStyleOptionViewItem &o
     auto rect = option.rect.toRectF();
     QPainterPath background;
     background.addRoundedRect(rect.x() - 2, rect.y(), rect.width(), itemHeight, 5, 5);
-    painter->fillPath(background, QBrush(QColor(215, 215, 215)));
+    painter->fillPath(background, QBrush(ColorRepository::aria2SettingItemBackgroundColor()));
     // name
     QRectF nameRect(rect.topLeft(), rect.topLeft() + QPointF(nameWidth, itemHeight));
     QFont font;
     font.setPixelSize(14);
     painter->setFont(font);
-    painter->setPen(QPen(Qt::black, 1));
+    painter->setPen(QPen(QBrush(ColorRepository::text()), 1));
     painter->drawText(nameRect, Qt::AlignRight | Qt::AlignVCenter, setting.key());
     // control
     QRectF controlRect(nameRect.topRight(), nameRect.topRight() + QPointF(control, itemHeight));
-    painter->setPen(QPen(QBrush(QColor(25, 179, 145)), 2, Qt::SolidLine, Qt::SquareCap));
+    painter->setPen(QPen(QBrush(ColorRepository::aria2SettingThemeColor()), 2, Qt::SolidLine, Qt::SquareCap));
     painter->drawLine(QPointF(controlRect.x() + 8, controlRect.y() + 8), QPointF(controlRect.x() + 8, controlRect.y() + 24));
     QRectF editRect(nameRect.topRight().x() + 25, nameRect.y(), rect.width() - nameRect.width(), itemHeight);
     if (setting.unit() == Core::SettingItem::None)
@@ -41,10 +42,10 @@ void SettingItemDelegate::paint(QPainter *painter, const QStyleOptionViewItem &o
     painter->restore();
 }
 
-void SettingItemDelegate::paintSwitch(QPainter *painter, const QRectF &rectF, const QString &value) const{
+void Aria2SettingItemDelegate::paintSwitch(QPainter *painter, const QRectF &rectF, const QString &value) const{
     painter->setPen(Qt::NoPen);
     QRectF btnBackground(rectF.x() + 25, rectF.y() + 4, 2 * diameter + spacing, diameter + 2 * spacing);
-    painter->setBrush(QBrush(QColor(205, 205, 205)));
+    painter->setBrush(QBrush(ColorRepository::switchBackgroundColor()));
     painter->drawRoundedRect(btnBackground, 11, 11);
     if (value.contains("true", Qt::CaseInsensitive)) {
         QRectF trueBtn(btnBackground.x() + 2, btnBackground.y() + 2, diameter, diameter);
@@ -57,7 +58,7 @@ void SettingItemDelegate::paintSwitch(QPainter *painter, const QRectF &rectF, co
     }
 }
 
-void SettingItemDelegate::paintNumber(QPainter *painter, const QRectF &rectF, const QString &value) const {
+void Aria2SettingItemDelegate::paintNumber(QPainter *painter, const QRectF &rectF, const QString &value) const {
     if (value.endsWith("M")) {
         auto lastPos = value.lastIndexOf(QChar('M'));
         painter->drawText(rectF, Qt::AlignLeft | Qt::AlignVCenter, value.left(lastPos));
@@ -68,7 +69,7 @@ void SettingItemDelegate::paintNumber(QPainter *painter, const QRectF &rectF, co
     }
 }
 
-void SettingItemDelegate::setEditorData(QWidget *editor, const QModelIndex &index) const {
+void Aria2SettingItemDelegate::setEditorData(QWidget *editor, const QModelIndex &index) const {
 
     QStyledItemDelegate::setEditorData(editor, index);
     auto *lineEdit = qobject_cast<QLineEdit *>(editor);
@@ -77,7 +78,7 @@ void SettingItemDelegate::setEditorData(QWidget *editor, const QModelIndex &inde
     auto setting = var.value<Core::SettingItem>();
     lineEdit->setText(setting.value());
 }
-void SettingItemDelegate::setModelData(QWidget *editor, QAbstractItemModel *model, const QModelIndex &index) const {
+void Aria2SettingItemDelegate::setModelData(QWidget *editor, QAbstractItemModel *model, const QModelIndex &index) const {
     const auto *lineEdit = qobject_cast<QLineEdit *>(editor);
     const auto value = lineEdit->text();
     if (value.length() <= 0)
@@ -88,7 +89,7 @@ void SettingItemDelegate::setModelData(QWidget *editor, QAbstractItemModel *mode
     var.setValue(setting);
     model->setData(index, var, Qt::UserRole + 1);
 }
-void SettingItemDelegate::updateEditorGeometry(QWidget *editor, const QStyleOptionViewItem &option, const QModelIndex &index) const {
+void Aria2SettingItemDelegate::updateEditorGeometry(QWidget *editor, const QStyleOptionViewItem &option, const QModelIndex &index) const {
     if (!index.isValid())
         return;
     editor->setObjectName("SettingEditor");
@@ -104,13 +105,13 @@ void SettingItemDelegate::updateEditorGeometry(QWidget *editor, const QStyleOpti
         editor->setGeometry(rect.x() + nameWidth + 13, rect.y() + 2, rect.width() - nameWidth - 22, itemHeight - 4);
     }
 }
-QSize SettingItemDelegate::sizeHint(const QStyleOptionViewItem &option, const QModelIndex &index) const {
+QSize Aria2SettingItemDelegate::sizeHint(const QStyleOptionViewItem &option, const QModelIndex &index) const {
     return {option.rect.width(), 34};
 }
-bool SettingItemDelegate::editorEvent(QEvent *event, QAbstractItemModel *model, const QStyleOptionViewItem &option, const QModelIndex &index) {
+bool Aria2SettingItemDelegate::editorEvent(QEvent *event, QAbstractItemModel *model, const QStyleOptionViewItem &option, const QModelIndex &index) {
     return QStyledItemDelegate::editorEvent(event, model, option, index);
 }
-QWidget *SettingItemDelegate::createEditor(QWidget *parent, const QStyleOptionViewItem &option, const QModelIndex &index) const {
+QWidget *Aria2SettingItemDelegate::createEditor(QWidget *parent, const QStyleOptionViewItem &option, const QModelIndex &index) const {
     return QStyledItemDelegate::createEditor(parent, option, index);
 }
 

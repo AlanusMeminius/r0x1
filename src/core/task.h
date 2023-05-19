@@ -1,33 +1,52 @@
 #pragma once
-#include "../util/qvarianthelper.h"
+#include "util/qvarianthelper.h"
+#include <QDir>
 #include <QString>
-
-//#define QVARIANTMACRO \
-//   public:            \
-//    inline operator QVariant() const { return QVariant::fromValue(*this); }
+#include <QUrl>
+#include <utility>
 
 namespace Core {
+typedef uint64_t Gid;
+struct Status {
+    QVARIANTMACRO
+//    Core::Status &operator=(const Core::Status &rhs) {
+//        if (this == &rhs) {
+//            return *this;
+//        }
+//        gid = rhs.gid;
+//        totalLength = rhs.totalLength;
+//        completedLength = rhs.completedLength;
+//        uploadSpeed = rhs.uploadSpeed;
+//        return *this;
+//    };
+    Gid gid;
+    int64_t totalLength;
+    int64_t completedLength;
+    int downloadSpeed;
+    int uploadSpeed;
+
+};
+
 class Task {
     QVARIANTMACRO
    public:
-    Task() = default;
-    Task(QString name, QString url, QString dir, QString gid, int status, int progress, double speed);
-    QString name() const { return m_name; };
-    QString url() const { return m_url; };
-    QString dir() const { return m_dir; };
-    QString gid() const { return m_gid; }
-    int status() const { return m_status; };
-    int progress() const { return m_progress; };
-    double speed() const { return m_speed; };
+    explicit Task() = default;
+    explicit Task(QUrl url, const QDir& dir, Gid gid) : m_url(std::move(url)), m_dir(dir), m_gid(gid){};
+    [[nodiscard]] QString name() const { return m_name; };
+    [[nodiscard]] QString url() const { return m_url.url(); };
+    [[nodiscard]] QString dir() const { return m_dir.absolutePath(); };
+    [[nodiscard]] Gid gid() const { return m_gid; };
+    void setName(QString name) { m_name = std::move(name); };
+    int category() {
+        return 0;
+    }
+    Core::Status status{};
 
    private:
-    QString m_name;
-    QString m_url;
-    QString m_dir;
-    QString m_gid;
-    double m_speed = 0;
-    int m_status = 0;
-    int m_progress = 0;
+    Gid m_gid = 0;
+    QUrl m_url;
+    QDir m_dir;
+    QString m_name = m_url.fileName();
 };
 
 }// namespace Core

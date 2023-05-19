@@ -1,14 +1,25 @@
 #pragma once
 #include <QFile>
 #include <QIcon>
+#include <QPixmap>
 #include <QMap>
 #include <QPalette>
 #include <QString>
-#include <QTextStream>
 #include <utility>
 
-static bool darkMode = false;
-
+namespace ColorRepository {
+void setDarkMode(bool dark);
+QPalette standardPalette();
+QColor windowBackground();
+QColor baseBackground();
+QColor text();
+QColor horizonNavigationBackgroundColor();
+QColor horizonNavigationBtnColor();
+QColor horizonNavigationSelectedBtnFontColor();
+QColor aria2SettingItemBackgroundColor();
+QColor aria2SettingThemeColor();
+QColor switchBackgroundColor();
+}
 namespace Ui {
 static constexpr QColor const dBackground = QColor(38, 38, 38);
 static constexpr QColor const lBackground = QColor(235, 235, 235);
@@ -21,14 +32,6 @@ constexpr QColor const backgroundColor = lBackground;
 constexpr QColor const btnColor = lBtn;
 constexpr QColor const fontColor = lBtnName;
 
-void setDark();
-
-QColor baseBackgroundColor();
-QColor baseFontColor();
-
-QColor horizonNavigationBackgroundColor();
-QColor horizonNavigationBtnColor();
-QColor horizonNavigationSelectedBtnFontColor();
 }// namespace Ui
 
 class Theme {
@@ -38,29 +41,10 @@ class Theme {
         Dark,
         Auto
     };
-    void changeTheme(theme);
     static QIcon icon(const QString &name) {
         return QIcon(QString(":/res/icons/%1.svg").arg(name));
     };
-
-    static QString styleContent(const QString &name) {
-        QString qss;
-        QFile file(QString(":/res/%1.qss").arg(name));
-        if (file.open(QFile::ReadOnly)) {
-            QStringList list;
-            QTextStream in(&file);
-            while (!in.atEnd()) {
-                QString line;
-                in >> line;
-                list << line;
-            }
-            qss = list.join("\n");
-            file.close();
-        }
-        return qss;
+    static QPixmap pix(const QString &name, const QSize &size) {
+      return  QIcon(QString(":/res/icons/%1.svg").arg(name)).pixmap(size);
     };
-
-   private:
-    theme currentTheme;
 };
-//static  QColor background = (isDarkTheme()) ? dBackground : lBackground;

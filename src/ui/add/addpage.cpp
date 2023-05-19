@@ -5,7 +5,6 @@ AddPage::AddPage(QWidget *parent)
     : QWidget(parent),
       addPageMainLayout(new QGridLayout),
       addLabel(new QLabel),
-//      urlInputLayout(new QHBoxLayout),
       urlInput(new QLineEdit),
       actionButton(new QPushButton),
       horizonNavigation(new HorizonNavigation),
@@ -31,7 +30,6 @@ AddPage::AddPage(QWidget *parent)
     QStringList horizonNavigationBtn;
     horizonNavigationBtn << "Default" << "BitTorrent";
     horizonNavigation->addItems(horizonNavigationBtn);
-//    horizonNavigation->setCurrentRow(0);
 
     addPageMainLayout->addWidget(stackedWidget,3,0,7,11);
     stackedWidget->addWidget(addPageDefaultSetting);
@@ -39,6 +37,8 @@ AddPage::AddPage(QWidget *parent)
     msg->setText("BitTorrent Setting");
 
     connect(horizonNavigation, &HorizonNavigation::currentItemChanged, stackedWidget, &QStackedWidget::setCurrentIndex);
+
+    connect(this->actionButton, &QPushButton::clicked, AppEvent::getInstance(), &AppEvent::addTaskAction);
 }
 
 AddPageDefaultSetting::AddPageDefaultSetting(QWidget *parent)

@@ -40,12 +40,12 @@ SET(EXECUTABLE_OUTPUT_PATH ${PROJECT_BINARY_DIR}/bin)
 
 # src
 if (APPLE)
-   set(PLATFORM
-           src/platform/launchermac.h
-           src/platform/launchermac.cpp
-           src/platform/framelesswindow.mm
-           src/platform/framelesswindow.h
-           )
+    set(PLATFORM
+            src/platform/launchermac.h
+            src/platform/launchermac.cpp
+            src/platform/framelesswindow.mm
+            src/platform/framelesswindow.h
+            )
 elseif (UNIX)
     set(PLATFORM
             src/platform/launcherlinux.cpp
@@ -63,19 +63,22 @@ set(SRC src/core/launcher.cpp
         src/core/launcher.h
         src/core/app.cpp
         src/core/app.h
-        src/core/task.cpp
         src/core/task.h
         src/platform/platform.h
-
-     #   src/util/loger.cpp
-    #    src/util/loger.h
+        
+        #   src/util/loger.cpp
+        #    src/util/loger.h
         src/core/appevent.cpp
         src/core/appevent.h
-        src/libaria2/ariainterface.cpp
-        src/libaria2/ariainterface.h
         src/core/setting.cpp
         src/core/setting.h
-        src/util/qvarianthelper.h)
+        src/util/qvarianthelper.h
+        src/ui/setting/aria2settingmodel.cpp
+        src/ui/setting/aria2settingmodel.h
+        src/libaria2/aria2worker.cpp
+        src/libaria2/aria2worker.h
+        src/libaria2/aria2controller.cpp
+        src/libaria2/aria2controller.h)
 set(UI
 
         src/ui/basewindow.cpp
@@ -86,6 +89,8 @@ set(UI
         src/ui/add/addpage.h
         src/ui/theme.cpp
         src/ui/theme.h
+#        tests/toast.cpp
+#        tests/toast.h
         src/ui/task/taskpage.cpp
         src/ui/task/taskpage.h
         src/ui/about/aboutpage.cpp
@@ -96,8 +101,23 @@ set(UI
         src/ui/components/horizonnavigation.h
         src/ui/components/toast.cpp
         src/ui/components/toast.h
-        src/ui/help/helppage.cpp src/ui/help/helppage.h)
-
+        src/ui/help/helppage.cpp
+        src/ui/help/helppage.h
+        src/ui/setting/aria2settingdelegate.cpp
+        src/ui/setting/aria2settingdelegate.h
+        src/ui/task/taskmodel.cpp
+        src/ui/task/taskmodel.h
+        src/ui/task/taskdelegate.cpp
+        src/ui/task/taskdelegate.h
+        src/ui/setting/commonsetting.cpp
+        src/ui/setting/commonsetting.h
+        src/ui/setting/themeswitchbtn.cpp
+        src/ui/setting/themeswitchbtn.h
+        src/ui/setting/commonswitchbtn.cpp
+        src/ui/setting/commonswitchbtn.h
+        src/ui/setting/advancedsetting.cpp
+        src/ui/setting/advancedsetting.h)
+        
 set(Parser
         src/parser/parser.h
         src/parser/url.h
@@ -143,3 +163,4 @@ install(TARGETS ${PROJECT_NAME}
         BUNDLE DESTINATION "${EXECUTABLE_OUTPUT_PATH}"
         LIBRARY DESTINATION "${EXECUTABLE_OUTPUT_PATH}"
         )
+        

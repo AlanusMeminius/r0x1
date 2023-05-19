@@ -1,7 +1,7 @@
-#include "launcher.h"
+#include "core/launcher.h"
+#include "core/app.h"
 #include "platform/platform.h"
-#include "QApplication"
-#include "app.h"
+#include <QApplication>
 
 namespace Core {
 Launcher::Launcher(int argc, char *argv[])
@@ -18,7 +18,6 @@ int Launcher::exec() {
 
     QApplication a(_argc, _argv);
     QApplication::setApplicationName("R0x1");
-
     App app;
     QApplication::setWindowIcon(Theme::icon("hippo"));
     return QApplication::exec();
@@ -28,5 +27,4 @@ void Launcher::initHighDpi() {
         Qt::HighDpiScaleFactorRoundingPolicy::PassThrough);
 }
 
-// TODO init log
 }// namespace Core

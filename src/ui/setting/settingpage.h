@@ -1,16 +1,17 @@
 #pragma once
+#include "advancedsetting.h"
+#include "aria2settingdelegate.h"
+#include "commonsetting.h"
 #include "core/setting.h"
-#include "ui/setting/commonsetting.h"
 #include "ui/components/horizonnavigation.h"
-#include "ui/setting/settingdelegate.h"
+#include <QHBoxLayout>
 #include <QLabel>
 #include <QListView>
+#include <QPushButton>
+#include <QStackedWidget>
 #include <QStandardItemModel>
 #include <QVBoxLayout>
-#include <QHBoxLayout>
-#include <QStackedWidget>
 #include <QWidget>
-#include <QPushButton>
 namespace Ui {
 
 class Aria2SettingList : public QListView {
@@ -19,7 +20,7 @@ class Aria2SettingList : public QListView {
     explicit Aria2SettingList(QWidget *parent = nullptr);
 
    private:
-    SettingItemDelegate *settingItemDelegate;
+    Aria2SettingItemDelegate *settingItemDelegate;
     QStandardItemModel *model;
 
    public:
@@ -34,7 +35,6 @@ class SettingPage : public QWidget {
    public:
     explicit SettingPage(QWidget *parent = nullptr);
 
-
     QVBoxLayout *settingPageLayout;
     QLabel *titleLabel;
     QHBoxLayout *navigationLayout;
@@ -42,8 +42,8 @@ class SettingPage : public QWidget {
     QPushButton *defaultBtn;
     QPushButton *saveBtn;
     QStackedWidget *stackedWidget;
-    QScrollArea *commonSettingScrollArea;
     CommonSetting *commonSetting;
+    AdvancedSetting *advancedSetting;
     Aria2SettingList *settingList;
 };
 
