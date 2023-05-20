@@ -2,6 +2,7 @@
 #include <QDebug>
 #include <QDir>
 #include <QStandardPaths>
+#include <QThread>
 #include <aria2.h>
 
 App::App()
@@ -34,9 +35,10 @@ URLParser::Result App::processUrl() {
 void App::processSingleUrl() {
     URLParser::Result url = processUrl();
     auto path = QStandardPaths::standardLocations(QStandardPaths::DownloadLocation);
+    qDebug()<<"GUI thread = "<<QThread::currentThreadId();
     if (!url.urls.isEmpty()) {
         aria2Controller = std::make_unique<Aria2::Aria2Controller>();
-        aria2Controller->addTaskInfo(url.urls,path.at(0));
+        aria2Controller->addTaskInfo(url.urls, path.at(0));
     }
 }
 #if 0
@@ -82,7 +84,7 @@ void App::setSignalsSlot() {
             activateStylesheet(which);
         }
     });
-    connect(AppEvent::getInstance(), &AppEvent::addTaskAction,this,&App::processSingleUrl);
+    connect(AppEvent::getInstance(), &AppEvent::addTaskAction, this, &App::processSingleUrl);
 
 }
 void App::getStyleSheetContent() {

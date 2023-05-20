@@ -33,8 +33,8 @@ class AddPage final : public QWidget {
    public:
     explicit AddPage(QWidget *parent = nullptr);
 
-    QGridLayout *addPageMainLayout;
-    QLabel *addLabel;
+//    QGridLayout *addPageMainLayout;
+//    QLabel *addLabel;
     QLineEdit *urlInput;
     QPushButton *actionButton;
 

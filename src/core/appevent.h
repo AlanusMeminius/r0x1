@@ -8,22 +8,22 @@
 
 class AppEvent : public QObject {
     Q_OBJECT
-   public:
+public:
     static AppEvent *getInstance();
 
-   public:
+public:
     explicit AppEvent(QObject *parent = nullptr);
     AppEvent &operator=(AppEvent &) = delete;
     AppEvent(AppEvent &) = delete;
 
-   private:
+private:
     static AppEvent *m_appEvent_ptr;
     static QMutex m_mutex;
 
-   public slots:
-   signals:
+public slots:
+signals:
     void themeIndexChange(int);
     void addTaskAction();
     void addTaskItemToUi(const QVariant &);
-    void updateTaskInfoToUi(const QVariant&);
+    void updateTaskInfoToUi(const QVariant &);
 };

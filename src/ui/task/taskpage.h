@@ -26,7 +26,6 @@ class TaskList : public QListView {
     void btnAction(const QModelIndex &index, int) const;
     void addTask(const QVariant&);
     void updateTaskStatus(const QVariant &status);
-    static QString formatDownloadSpeed(int bytesPerSec);
 };
 
 class TaskPage final : public QWidget {

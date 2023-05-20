@@ -3,12 +3,31 @@
 #include "ui/theme.h"
 
 namespace Ui {
-TaskDelegate::TaskDelegate(QListView *parent) : QStyledItemDelegate(parent) {
+template<typename T>
+QString formatSize(T bytesPerSec)
+{
+    const double Gib = pow(2, 30);
+    const double Mib = pow(2, 20);
+    const double Kib = pow(2, 10);
+    if (bytesPerSec >= Gib) {
+        return QString::number(bytesPerSec / Gib, 'g', 2) + "GiB";
+    } else if (bytesPerSec >= Mib) {
+        return QString::number(bytesPerSec / Mib, 'g', 2) + "Mib";
+    } else if (bytesPerSec >= Kib) {
+        return QString::number(bytesPerSec / Kib, 'g', 2) + "Kib";
+    } else {
+        return QString::number(bytesPerSec, 'g', 3) + "B";
+    }
+}
+
+TaskDelegate::TaskDelegate(QListView *parent) : QStyledItemDelegate(parent)
+{
 }
 void TaskDelegate::paint(
     QPainter *painter,
     const QStyleOptionViewItem &option,
-    const QModelIndex &index) const {
+    const QModelIndex &index) const
+{
     Q_ASSERT(index.isValid());
 
     auto var = index.data(Qt::DisplayRole);
@@ -60,24 +79,33 @@ void TaskDelegate::paint(
         QRectF completed(
             progress.x() + 1,
             progress.y() + 1,
-            progress.width() * (double) p - 2,
+            progress.width() / 100 * (double)p + 10,
             progress.height() - 2);
         painter->drawRoundedRect(completed, 1, 1);
     }
-    // speed
+    // size and speed
     painter->setPen(QPen(Qt::black, 1));
-    QRectF speed(progress.x(), progress.y() + 10, 80, 30);
-    painter->drawText(speed, Qt::AlignVCenter, formatDownloadSpeed(status.downloadSpeed));
+    QRectF sizeRect(progress.x(), progress.y() + 10, 120, 30);
+    painter->drawText(
+        sizeRect,
+        Qt::AlignVCenter,
+        formatSize(status.totalLength) + "/" + formatSize(status.completedLength));
+    painter->drawText(
+        sizeRect.adjusted(120, 0, 120, 0),
+        Qt::AlignVCenter,
+        formatSize(status.downloadSpeed) + "/s");
     painter->restore();
 }
-QSize TaskDelegate::sizeHint(const QStyleOptionViewItem &option, const QModelIndex &index) const {
+QSize TaskDelegate::sizeHint(const QStyleOptionViewItem &option, const QModelIndex &index) const
+{
     return {400, 72};
 }
 bool TaskDelegate::editorEvent(
     QEvent *event,
     QAbstractItemModel *model,
     const QStyleOptionViewItem &option,
-    const QModelIndex &index) {
+    const QModelIndex &index)
+{
     auto rect = option.rect.toRectF();
 
     QRectF details(rect.right() - btnWidth, rect.y(), btnWidth, iconSize);
@@ -104,18 +132,5 @@ bool TaskDelegate::editorEvent(
     }
     return true;
 }
-QString TaskDelegate::formatDownloadSpeed(int bytesPerSec) {
-    const double GIBIBYTES = pow(2, 30);
-    const double MEBIBYTES = pow(2, 20);
-    const double KIBIBYTES = pow(2, 10);
-    if (bytesPerSec >= GIBIBYTES) {
-        return QString::number(bytesPerSec / GIBIBYTES) + "GiB/s";
-    } else if (bytesPerSec >= MEBIBYTES) {
-        return QString::number(bytesPerSec / MEBIBYTES) + "Mib/s";
-    } else if (bytesPerSec >= KIBIBYTES) {
-        return QString::number(bytesPerSec / KIBIBYTES) + "Kib/s";
-    } else {
-        return QString::number(bytesPerSec) + "B/s";
-    }
-}
+
 }// namespace Ui

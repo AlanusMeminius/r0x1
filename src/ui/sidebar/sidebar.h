@@ -11,9 +11,10 @@
 namespace Ui {
 class SideBar : public QListWidget {
     Q_OBJECT
-   public:
+public:
     explicit SideBar(QWidget *parent = nullptr);
-   private:
+
+private:
     QListWidgetItem *icon;
     QListWidgetItem *task;
     QListWidgetItem *setting;

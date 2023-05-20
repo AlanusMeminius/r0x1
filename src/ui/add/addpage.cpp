@@ -3,8 +3,8 @@
 namespace Ui {
 AddPage::AddPage(QWidget *parent)
     : QWidget(parent),
-      addPageMainLayout(new QGridLayout),
-      addLabel(new QLabel),
+//      addPageMainLayout(new QGridLayout),
+//      addLabel(new QLabel),
       urlInput(new QLineEdit),
       actionButton(new QPushButton),
       horizonNavigation(new HorizonNavigation),
@@ -13,17 +13,20 @@ AddPage::AddPage(QWidget *parent)
       msg(new QLabel) {
     this->setObjectName("AddPage");
     setAttribute(Qt::WA_StyledBackground, true);
+    auto addPageMainLayout = new QGridLayout;
     setLayout(addPageMainLayout);
+
+    auto addLabel = new QLabel;
     addPageMainLayout->addWidget(addLabel,0,0);
     addLabel->setText("Add");
     addLabel->setObjectName("AddLabel");
     addPageMainLayout->addWidget(urlInput,1,0,1,8 );
     urlInput->setObjectName("UrlInput");
-    urlInput->setPlaceholderText("enter link");
+    urlInput->setPlaceholderText("enter link or magnet");
 
-    addPageMainLayout->addWidget(actionButton,1,9,1,2);
-    actionButton->setObjectName("ActionBtn");
-    actionButton->setText("dash");
+//    addPageMainLayout->addWidget(actionButton,1,9,1,2);
+//    actionButton->setObjectName("ActionBtn");
+//    actionButton->setText("dash");
 
     addPageMainLayout->addWidget(horizonNavigation,2,0,1,11);
     horizonNavigation->setObjectName("AddPageHorizonNavigation");
@@ -38,7 +41,7 @@ AddPage::AddPage(QWidget *parent)
 
     connect(horizonNavigation, &HorizonNavigation::currentItemChanged, stackedWidget, &QStackedWidget::setCurrentIndex);
 
-    connect(this->actionButton, &QPushButton::clicked, AppEvent::getInstance(), &AppEvent::addTaskAction);
+    connect(addPageDefaultSetting->confirm, &QPushButton::clicked, AppEvent::getInstance(), &AppEvent::addTaskAction);
 }
 
 AddPageDefaultSetting::AddPageDefaultSetting(QWidget *parent)

@@ -16,5 +16,4 @@ Ui::SideBar::SideBar(QWidget *parent)
     this->setContentsMargins(0, 0, 0, 0);
     this->setSpacing(5);
     this->setCurrentRow(0);
-    this->setIconSize(QSize(14,14));
 }
