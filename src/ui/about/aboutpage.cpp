@@ -1,6 +1,8 @@
+#include <QDesktopServices>
+#include <QUrl>
 
 #include "aboutpage.h"
-#include <QDesktopServices>
+
 
 namespace Ui {
 AboutPage::AboutPage(QWidget *parent)

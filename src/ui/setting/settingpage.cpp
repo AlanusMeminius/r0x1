@@ -1,3 +1,5 @@
+#include <QDebug>
+
 #include "settingpage.h"
 #include "core/setting.h"
 
@@ -77,7 +79,7 @@ void Aria2SettingList::itemClicked(const QModelIndex &index) {
         return;
     auto setting = data.value<Core::SettingItem>();
     if (setting.unit() == Core::SettingItem::Bool) {
-        QRectF itemRect = this->visualRect(index).toRectF();
+        QRect itemRect = this->visualRect(index);
         int mouseX = this->mapFromGlobal(QCursor::pos()).x();
         if (setting.value().contains("true", Qt::CaseInsensitive)) {
             if (mouseX >= itemRect.x() + 247 && mouseX <= itemRect.x() + 267) {

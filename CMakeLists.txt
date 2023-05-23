@@ -108,12 +108,12 @@ set(Parser
         src/parser/bili.h
         )
 
-qt_add_executable(
+add_executable(
         ${PROJECT_NAME}  ${SRC} ${Parser} ${QRC} ${UI} ${PLATFORM} src/main.cpp )
 # List of Qt components required to build the app.
 
 foreach (COMPONENTS ${QT_COMPONENTS})
-    set(LIB ${LIB} Qt::${COMPONENTS})
+    set(LIB ${LIB} Qt${QT_VERSION_MAJOR}::${COMPONENTS})
 endforeach ()
 
 

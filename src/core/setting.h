@@ -1,10 +1,15 @@
 #pragma once
-#include "SimpleIni.h"
-#include "util/qvarianthelper.h"
+
 #include <QMap>
 #include <QSettings>
 #include <QString>
+
 #include <utility>
+#include <memory>
+
+#include "SimpleIni.h"
+#include "util/qvarianthelper.h"
+
 namespace Core {
 
 class SettingItem {
