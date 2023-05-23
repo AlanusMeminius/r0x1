@@ -1,7 +1,11 @@
-#include "horizonnavigation.h"
 #include <QMouseEvent>
 #include <QPainterPath>
+#include <QDebug>
+
+
 #include <utility>
+
+#include "horizonnavigation.h"
 
 namespace Ui {
 //HorizonNavigation::HorizonNavigation(QWidget *parent)
@@ -67,8 +71,8 @@ void HorizonNavigation::paintEvent(QPaintEvent *event) {
     painter.restore();
 }
 void HorizonNavigation::mousePressEvent(QMouseEvent *event) {
-    if (event->position().x() / columnWidth < int(itemList.length())) {
-        currentIndex = qIntCast(event->position().x()) / columnWidth;
+    if (event->pos().x() / columnWidth < int(itemList.length())) {
+        currentIndex = qIntCast(double(event->pos().x())) / columnWidth;
         emit currentItemChanged(currentIndex);
         animation->setStartValue(preIndex * columnWidth);
         animation->setEndValue(currentIndex * columnWidth);
